@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: livraria
+  data:
+    mongodb:
+      uri: mongodb://localhost/livraria_c125
