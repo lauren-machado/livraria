@@ -1,9 +1,6 @@
 package br.inatel.biblioteca.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -14,9 +11,6 @@ import java.util.List;
 
 @Document
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Livro {
 
     @Id

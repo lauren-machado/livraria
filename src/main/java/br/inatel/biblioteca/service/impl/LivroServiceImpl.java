@@ -42,6 +42,7 @@ public class LivroServiceImpl implements LivroService {
     @Override
     @Transactional
     public LivroDTO atualizarLivro(String id, LivroDTO livroDTO) {
+        validInfo(livroDTO);
         Livro livro = livroRepository.findById(id).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Livro não encontrado"));
         ModelMapper modelMapper = new ModelMapper();
         Livro livroAtualizado = modelMapper.map(livroDTO, Livro.class);
