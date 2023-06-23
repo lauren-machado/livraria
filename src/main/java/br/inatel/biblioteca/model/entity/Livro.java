@@ -26,6 +26,8 @@ public class Livro {
 
     private String autor;
 
+    private String sinopse;
+
     private String editora;
 
     private String ano;

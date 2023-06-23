@@ -9,8 +9,11 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +32,39 @@ public class LivroServiceImpl implements LivroService {
         return livro.getId();
     }
 
+    @Override
+    public LivroDTO buscarLivro(String id) {
+        Livro livro = livroRepository.findById(id).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Livro não encontrado"));
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(livro, LivroDTO.class);
+    }
+
+    @Override
+    @Transactional
+    public LivroDTO atualizarLivro(String id, LivroDTO livroDTO) {
+        Livro livro = livroRepository.findById(id).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Livro não encontrado"));
+        ModelMapper modelMapper = new ModelMapper();
+        Livro livroAtualizado = modelMapper.map(livroDTO, Livro.class);
+        livroAtualizado.setId(livro.getId());
+        livroRepository.save(livroAtualizado);
+
+        return modelMapper.map(livroAtualizado, LivroDTO.class);
+    }
+
+    @Override
+    @Transactional
+    public void deletarLivro(String id) {
+        Livro livro = livroRepository.findById(id).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Livro não encontrado"));
+        livroRepository.delete(livro);
+    }
+
+    @Override
+    public List<LivroDTO> listarLivros() {
+        List<Livro> livro = livroRepository.findAll();
+
+        return livro.stream().map(livro1 -> new ModelMapper().map(livro1, LivroDTO.class)).toList();
+    }
+
     private void validInfo(LivroDTO livroDTO) {
         if (livroDTO.getTitulo() == null || livroDTO.getTitulo().isEmpty()) {
             throw new CampoRequeridoException("Titulo não pode ser nulo ou vazio");
@@ -45,25 +81,5 @@ public class LivroServiceImpl implements LivroService {
         if (livroDTO.getEstiloLiterario() == null || livroDTO.getEstiloLiterario().isEmpty()) {
             throw new CampoRequeridoException("Estilo Literario não pode ser nulo ou vazio");
         }
-    }
-
-    @Override
-    public LivroDTO buscarLivro(String id) {
-        return null;
-    }
-
-    @Override
-    public LivroDTO atualizarLivro(String id, LivroDTO livroDTO) {
-        return null;
-    }
-
-    @Override
-    public void deletarLivro(String id) {
-
-    }
-
-    @Override
-    public List<LivroDTO> listarLivros() {
-        return null;
     }
 }
