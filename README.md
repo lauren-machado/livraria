@@ -11,7 +11,8 @@
 
 - [Java 17](https://www.oracle.com/java/technologies/downloads/#java17)
 - [Gradle](https://gradle.org/install/)
-- [InteliJidea](https://www.jetbrains.com/pt-br/idea/download/#section=windows)
+- [InteliJidea](https://www.jetbrains.com/pt-br/idea/download/#section=windows) - Opcional
+- [MongoDB](https://www.mongodb.com/try/download/community)
 
 ### 🔧 Installing and Running
 ```bash
